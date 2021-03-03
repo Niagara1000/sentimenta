@@ -1,4 +1,4 @@
-
+# importing required libraries
 import feedparser
 import time
 import re
@@ -15,12 +15,15 @@ sia = SentimentIntensityAnalyzer()
 
 
 # stock market lexicon
+
 ..
+
 stock_lex['sentiment'] = (stock_lex['Aff_Score'] + stock_lex['Neg_Score'])/2
 stock_lex = dict(zip(stock_lex.Item, stock_lex.sentiment))
 
 
 # scaling sentiment values
+
 stock_lex_scaled = {}
 for k, v in stock_lex.items():
     if v > 0:
@@ -30,14 +33,16 @@ for k, v in stock_lex.items():
 
 
 
-<creating list of positive words/phrases into [positive]>
-<creating list of negative words/phrases into [negative]>
+# <creating list of positive words/phrases into [positive]>
+# <creating list of negative words/phrases into [negative]>
 
 ..
 
 
 # get the list of company names
+
 ..
+
 setofCompanies = [ ]  
 for i in x:
     i = i.split('\n')[0]
@@ -47,7 +52,9 @@ sorted_set_of_companies = (sorted(set(setofCompanies)))
 
 
 # get the list of filler words
+
 ..
+
 fillers=[]   
 for i in x:
     i = i.split('\n')[0]
@@ -55,12 +62,10 @@ for i in x:
 sorted_set_of_fillers = (sorted(set(fillers)))  
 
 
-
-
-
+# creating function to get company name
 
 def get_company_name(title, sorted_set_of_companies, sorted_set_of_fillers):
-    <regex>
+    # <regex>
     title = title.split()
     list_of_words_in_title = [i for i in title]
     
@@ -72,7 +77,7 @@ def get_company_name(title, sorted_set_of_companies, sorted_set_of_fillers):
     return allCompanies
 
 
-
+# connecting to MySQL database
 
 import mysql.connector as mysql
 db = mysql.connect(
@@ -84,14 +89,14 @@ db = mysql.connect(
 
 
 
-cursor = db.cursor() #db object, cursor method (used to retrieve ticker symbol from a table in the database)
+cursor = db.cursor() #db object, cursor method (used later to retrieve ticker symbols from a table in database)
 
 
-
+# sentiments
 
 def get_sentiment(text):
 
-    <calculating sentiment scores>
+    # <calculating sentiment scores>
     if sentiment_score > 0.8:
         sentiment = 'positive'
     elif sentiment_score < 0.2:
@@ -102,7 +107,7 @@ def get_sentiment(text):
     return sentiment
 
 
-
+# ticker symbols
 
 def get_symbol(company):
 
@@ -120,6 +125,7 @@ def get_symbol(company):
     return symbol
 
 
+# WSJ data
 
 def retrieve_wsj_data(url):
     d = feedparser.parse(url)
@@ -149,7 +155,7 @@ retrieve_wsj_data('https://feeds.a.dj.com/rss/RSSMarketsMain.xml')
 retrieve_wsj_data('https://feeds.a.dj.com/rss/RSSWSJD.xml')
 
 
-
+# CNBC data
 
 def retrieve_cnbc_data(url):
     e = feedparser.parse(url)
@@ -181,3 +187,4 @@ retrieve_cnbc_data('https://www.cnbc.com/id/15839069/device/rss/rss.html')
 
 
 # used similar method for other news outlets as well
+# changed according to RSS feed structure
