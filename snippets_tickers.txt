@@ -19,7 +19,7 @@ JPM
 VZ 
 KR 
 GE 
-FNMAM, 
+FNMAM
 PSX
 TMUS
 VLO 
